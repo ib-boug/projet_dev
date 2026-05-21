@@ -65,7 +65,8 @@ function GameDetails() {
       <button
         type="button"
         onClick={handleFavoriteClick}
-        className="bg-white text-black px-4 py-2 rounded mb-4 cursor-pointer"
+        className="bg-white text-black px-4 py-2 rounded mb-4 cursor-pointer hover:bg-gray-200 transition"
+        aria-label={ favorite ? "Retirer ce jeu des favoris": "Ajouter ce jeu aux favoris"}
       >
         {favorite ? "Retirer des favoris" : "Ajouter aux favoris"}
       </button>
@@ -114,7 +115,7 @@ function GameDetails() {
 
       <h2 className="text-2xl font-bold mb-2">Trailer</h2>
       {trailers.length > 0 ? (
-        <video controls className="w-full max-w-2xl">
+        <video controls className="w-full max-w-2xl rounded" aria-label="Trailer du jeu">
           <source src={trailers[0].data.max} type="video/mp4" />
         </video>
       ) : (
