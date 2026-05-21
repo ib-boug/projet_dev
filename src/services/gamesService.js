@@ -2,7 +2,13 @@ import axiosInstance from "../api/axios";
 
 export async function getGames(params = {}) {
   const response = await axiosInstance.get("/games", {
-    params,
+    params:{
+      ...params,
+      page_size: 20,
+      discover : true,
+      metacritic: "60,100"
+
+    },
   });
 
   return response.data;
