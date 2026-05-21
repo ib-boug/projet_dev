@@ -6,10 +6,11 @@ import GameDetails from "../pages/GameDetails";
 import Publisher from "../pages/Publisher";
 import Favorites from "../pages/Favorites";
 import NotFound from "../pages/NotFound";
-
+import Navbar from "../components/layout/Navbar";
 function AppRouter() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<Games />} />
