@@ -23,16 +23,15 @@ function Games() {
         let finalGames = data.results || [];
 
         if (ordering === "-released") {
-        finalGames = [...finalGames].sort((a, b) => {
+          finalGames = [...finalGames].sort((a, b) => {
             if (!a.released) return 1;
             if (!b.released) return -1;
-            
+
             return new Date(b.released) - new Date(a.released);
-        });
+          });
         }
 
         setGames(finalGames);
-
       } catch (err) {
         console.error(err);
         setError("Impossible de récupérer les jeux.");
@@ -45,17 +44,54 @@ function Games() {
   }, [platform, ordering]);
 
   return (
-    <main className="min-h-screen bg-black text-white p-6">
-      <h1 className="text-3xl font-bold mb-6">Games</h1>
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #020617, #111827, #312e81)",
+        color: "white",
+        padding: "40px",
+      }}
+    >
+      <section style={{ marginBottom: "35px" }}>
+        <h1
+          style={{
+            fontSize: "3rem",
+            marginBottom: "10px",
+            fontWeight: "bold",
+          }}
+        >
+          🎮 Explore Games
+        </h1>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
-        <label className="flex flex-col gap-2">
+        <p style={{ color: "#cbd5e1", fontSize: "1.1rem" }}>
+          Discover, filter and sort games from the RAWG database.
+        </p>
+      </section>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          flexWrap: "wrap",
+          marginBottom: "35px",
+          background: "rgba(255,255,255,0.08)",
+          padding: "20px",
+          borderRadius: "16px",
+          backdropFilter: "blur(10px)",
+        }}
+      >
+        <label style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <span>Plateforme</span>
           <select
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
-            className="bg-white text-black px-4 py-2 rounded"
             aria-label="Filtrer par plateforme"
+            style={{
+              padding: "12px",
+              borderRadius: "10px",
+              border: "none",
+              minWidth: "230px",
+            }}
           >
             <option value="">Toutes les plateformes</option>
             <option value="4">PC</option>
@@ -65,13 +101,18 @@ function Games() {
           </select>
         </label>
 
-        <label className="flex flex-col gap-2">
+        <label style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <span>Tri</span>
           <select
             value={ordering}
             onChange={(e) => setOrdering(e.target.value)}
-            className="bg-white text-black px-4 py-2 rounded"
             aria-label="Trier les jeux"
+            style={{
+              padding: "12px",
+              borderRadius: "10px",
+              border: "none",
+              minWidth: "230px",
+            }}
           >
             <option value="">Tri par défaut</option>
             <option value="-rating">Meilleures notes</option>
@@ -82,30 +123,94 @@ function Games() {
       </div>
 
       {loading ? (
-        <p className="text-center text-gray-400 py-10">Chargement des jeux...</p>
+        <p style={{ textAlign: "center", color: "#cbd5e1", padding: "40px" }}>
+          Chargement des jeux...
+        </p>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p style={{ color: "#ef4444" }}>{error}</p>
       ) : games.length === 0 ? (
-        <p className="text-gray-400 text-center py-10">Aucun jeu ne correspond à ces critères sur cette page.</p>
+        <p style={{ textAlign: "center", color: "#cbd5e1", padding: "40px" }}>
+          Aucun jeu ne correspond à ces critères sur cette page.
+        </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "24px",
+          }}
+        >
           {games.map((game) => (
-            <div key={game.id} className="bg-white text-black rounded p-4 flex flex-col justify-between">
-              <div>
-                <img
-                  src={game.background_image}
-                  alt={game.name}
-                  className="w-full h-48 object-cover rounded mb-3"
-                  loading="lazy"
-                />
+            <article
+              key={game.id}
+              style={{
+                background: "#1e293b",
+                borderRadius: "18px",
+                overflow: "hidden",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.35)",
+                transition: "all 0.25s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-6px)";
+                e.currentTarget.style.boxShadow =
+                  "0 25px 50px rgba(168,85,247,0.35)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow =
+                  "0 20px 40px rgba(0,0,0,0.35)";
+              }}
+            >
+              <img
+                src={game.background_image}
+                alt={game.name}
+                loading="lazy"
+                style={{
+                  width: "100%",
+                  height: "190px",
+                  objectFit: "cover",
+                }}
+              />
 
-                <Link to={`/games/${game.id}`} aria-label={`Voir les détails de ${game.name}`}>
-                  <h2 className="font-bold underline hover:text-blue-600 transition-colors">{game.name}</h2>
+              <div style={{ padding: "18px" }}>
+                <Link
+                  to={`/games/${game.id}`}
+                  aria-label={`Voir les détails de ${game.name}`}
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                  }}
+                >
+                  <h2
+                    style={{
+                      fontSize: "1.3rem",
+                      marginBottom: "12px",
+                    }}
+                  >
+                    {game.name}
+                  </h2>
                 </Link>
-              </div>
 
-              <p className="mt-2">⭐ {game.rating.toFixed(1)} / 5</p>
-            </div>
+                <p
+                  style={{
+                    color: "#facc15",
+                    fontWeight: "bold",
+                    marginBottom: "8px",
+                  }}
+                >
+                  ⭐ {game.rating?.toFixed(1)} / 5
+                </p>
+
+                <p
+                  style={{
+                    color: "#cbd5e1",
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  Released: {game.released || "Unknown"}
+                </p>
+              </div>
+            </article>
           ))}
         </div>
       )}

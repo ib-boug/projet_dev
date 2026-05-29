@@ -12,34 +12,112 @@ function Favorites() {
 
   if (favorites.length === 0) {
     return (
-      <main className="min-h-screen bg-black text-white p-6">
-        <h1 className="text-3xl font-bold mb-4">Favoris</h1>
-        <p>Aucun jeu en favori.</p>
+      <main
+        style={{
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #020617, #111827, #312e81)",
+          color: "white",
+          padding: "40px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "3rem",
+            marginBottom: "20px",
+          }}
+        >
+          ❤️ Favorites
+        </h1>
+
+        <p
+          style={{
+            color: "#cbd5e1",
+          }}
+        >
+          Aucun jeu en favori.
+        </p>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-black text-white p-6">
-      <h1 className="text-3xl font-bold mb-6">Favoris</h1>
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #020617, #111827, #312e81)",
+        color: "white",
+        padding: "40px",
+      }}
+    >
+      <h1
+        style={{
+          fontSize: "3rem",
+          marginBottom: "30px",
+        }}
+      >
+         Favorites
+      </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "24px",
+        }}
+      >
         {favorites.map((game) => (
-          <div key={game.id} className="bg-white text-black rounded p-4">
-            <Link to={`/games/${game.id}`}>
-              <h2 className="font-bold underline">{game.name}</h2>
+          <article
+            key={game.id}
+            style={{
+              background: "#1e293b",
+              borderRadius: "18px",
+              padding: "20px",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.35)",
+            }}
+          >
+            <Link
+              to={`/games/${game.id}`}
+              style={{
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: "1.3rem",
+                  marginBottom: "12px",
+                }}
+              >
+                {game.name}
+              </h2>
             </Link>
 
-            <p>⭐ {game.rating}</p>
+            <p
+              style={{
+                color: "#facc15",
+                fontWeight: "bold",
+                marginBottom: "15px",
+              }}
+            >
+              ⭐ {game.rating}
+            </p>
 
             <button
               type="button"
               onClick={() => handleRemoveFavorite(game.id)}
-              className="mt-3 bg-black text-white px-3 py-2 rounded cursor-pointer"
+              style={{
+                background: "#a855f7",
+                color: "white",
+                border: "none",
+                padding: "12px 18px",
+                borderRadius: "10px",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
             >
-              Retirer
+              Retirer des favoris
             </button>
-          </div>
+          </article>
         ))}
       </div>
     </main>
